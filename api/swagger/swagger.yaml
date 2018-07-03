@@ -1,0 +1,94 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: get form data
+# during dev, should point to your local machine
+host: localhost:10011
+# basePath prefixes all resource paths 
+basePath: /
+# 
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+  /api/getFormData:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: formDataCtrl
+    post:
+      tags: ['Form Module']
+      description: form Data
+      summary: form Data
+      # used as the method name of the controller
+      operationId: getFormData
+      parameters:
+        - name: body
+          in: body
+          description: Form data 
+          schema:
+           $ref: '#/definitions/getFormData'
+          required: true        
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/appResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"        
+# complex objects have schema definitions
+definitions:
+  appResponse:
+    required:
+      - code
+    properties:
+      code:
+        type: number
+      message:
+        type: string
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
+  getFormData:   
+    type: object
+    properties:
+      Event_title:
+        type: string    
+      Start_Time:
+        type: string
+      End_Time:  
+        type: string
+      Description:
+        type: string
+      Price:
+        type: number    
+      Event_url:
+        type: string
+      Venue_address:
+        type: string
+      Venue_city:
+        type: string
+      Venue_state:
+        type: string
+      Venue_country:
+        type: string
+      Venue_postalcode:
+        type: string
+      endpoint_url_id:
+        type: string
+      dynamic_Data:
+        type: array
+        items:
+          type: object                
